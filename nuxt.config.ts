@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 
-  modules: ['@nuxt/eslint', '@nuxt/ui', 'nuxt-auth-sanctum'],
+  modules: ['@nuxt/eslint', '@nuxt/ui', 'nuxt-auth-sanctum', '@formkit/nuxt'],
   ssr: false,
   devtools: { enabled: true },
   devServer: {
@@ -16,6 +16,11 @@ export default defineNuxtConfig({
     config: {
       stylistic: true,
     },
+  },
+
+  formkit: {
+    // Experimental support for auto loading
+    autoImport: true,
   },
 
   sanctum: {
