@@ -1,11 +1,27 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+const client = useSanctumClient()
+const { login } = useSanctumAuth()
 
-const submitted = ref(false)
-const submitHandler = async () => {
-  // Let's pretend this is an ajax request:
-  await new Promise(r => setTimeout(r, 1000))
-  submitted.value = true
+interface RegisterData {
+  name: string
+  email: string
+  password: string
+  password_confirm: string
+}
+
+const submitHandler = async (data: RegisterData) => {
+  await client('api/register', {
+    method: 'POST',
+    body: {
+      ...data,
+      password_confirmation: data.password_confirm,
+    },
+  })
+
+  await login({
+    email: data.email,
+    password: data.password,
+  })
 }
 </script>
 
