@@ -1,4 +1,10 @@
 <script setup lang="ts">
+definePageMeta({
+  sanctum: {
+    guestOnly: true,
+  },
+})
+
 const client = useSanctumClient()
 const { login } = useSanctumAuth()
 

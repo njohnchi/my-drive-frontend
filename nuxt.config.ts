@@ -29,5 +29,12 @@ export default defineNuxtConfig({
       login: '/api/login',
       logout: '/api/logout',
     },
+    redirect: {
+      onAuthOnly: '/login',
+      onGuestOnly: '/',
+    },
+    globalMiddleware: {
+      enabled: true,
+    },
   },
 })
