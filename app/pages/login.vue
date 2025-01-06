@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { FetchError } from 'ofetch'
+import type { FormKitNode } from '@formkit/core'
+
 definePageMeta({
   sanctum: {
     guestOnly: true,
@@ -13,8 +16,15 @@ interface LoginData {
   remember: boolean
 }
 
-const submitHandler = async (data: LoginData) => {
-  await login(data)
+const submitHandler = async (data: LoginData, node?: FormKitNode) => {
+  try {
+    await login(data)
+  }
+  catch (error) {
+    if (error instanceof FetchError && error.response?.status === 422) {
+      node?.setErrors([], error.data.errors)
+    }
+  }
 }
 </script>
 
@@ -36,7 +46,7 @@ const submitHandler = async (data: LoginData) => {
           name="email"
           label="Your email"
           placeholder="jane@example.com"
-          help="What email should we use?"
+          help="What email do you use?"
           validation="required|email"
         />
         <FormKit
@@ -63,12 +73,12 @@ const submitHandler = async (data: LoginData) => {
       </FormKit>
       <div class="flex justify-center">
         <p>Do not have an account?</p>
-        <NuxtLink
+        <ULink
           to="/register"
           class="text-blue-400 hover:underline ml-1"
         >
           Register
-        </NuxtLink>
+        </ULink>
       </div>
     </div>
   </div>

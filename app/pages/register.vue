@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import { FetchError } from 'ofetch'
+import type { FormKitNode } from '@formkit/core'
+
 definePageMeta({
   sanctum: {
     guestOnly: true,
   },
 })
-
-const client = useSanctumClient()
-const { login } = useSanctumAuth()
 
 interface RegisterData {
   name: string
@@ -15,19 +15,27 @@ interface RegisterData {
   password_confirm: string
 }
 
-const submitHandler = async (data: RegisterData) => {
-  await client('api/register', {
-    method: 'POST',
-    body: {
-      ...data,
-      password_confirmation: data.password_confirm,
-    },
-  })
+const client = useSanctumClient()
+const { refreshIdentity } = useSanctumAuth()
 
-  await login({
-    email: data.email,
-    password: data.password,
-  })
+const submitHandler = async (data: RegisterData, node?: FormKitNode) => {
+  try {
+    await client('api/register', {
+      method: 'POST',
+      body: {
+        ...data,
+        password_confirmation: data.password_confirm,
+      },
+    })
+
+    await refreshIdentity()
+    navigateTo('/')
+  }
+  catch (error) {
+    if (error instanceof FetchError && error.response?.status === 422) {
+      node?.setErrors([], error.data.errors)
+    }
+  }
 }
 </script>
 
@@ -89,12 +97,12 @@ const submitHandler = async (data: RegisterData) => {
       </FormKit>
       <div class="flex justify-center">
         <p>Already have an account?</p>
-        <NuxtLink
+        <ULink
           to="/login"
           class="text-blue-400 hover:underline ml-1"
         >
           Login
-        </NuxtLink>
+        </ULink>
       </div>
     </div>
   </div>
