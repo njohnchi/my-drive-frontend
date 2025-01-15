@@ -3,6 +3,7 @@ import { FetchError } from 'ofetch'
 import type { FormKitNode } from '@formkit/core'
 
 definePageMeta({
+  layout: 'guest',
   sanctum: {
     guestOnly: true,
   },
@@ -29,57 +30,53 @@ const submitHandler = async (data: LoginData, node?: FormKitNode) => {
 </script>
 
 <template>
-  <div class="flex justify-center py-12">
-    <div class="min-w-96 bg-gray-700 rounded p-8">
-      <h1 class="text-3xl text-center mb-2 font-semibold">
-        Login
-      </h1>
-      <FormKit
-        id="login-form"
-        type="form"
-        submit-label="Login"
-        :actions="false"
-        @submit="submitHandler"
-      >
-        <FormKit
-          type="text"
-          name="email"
-          label="Your email"
-          placeholder="jane@example.com"
-          help="What email do you use?"
-          validation="required|email"
-        />
-        <FormKit
-          type="password"
-          name="password"
-          label="Password"
-          validation="required|length:6|matches:/[^a-zA-Z]/"
-          :validation-messages="{
-            matches: 'Please include at least one symbol',
-          }"
-          placeholder="Your password"
-          help="Enter your password"
-        />
-        <FormKit
-          type="checkbox"
-          name="remember"
-          label="Remember me"
-        />
+  <h1 class="text-3xl text-center mb-2 font-semibold">
+    Login
+  </h1>
+  <FormKit
+    id="login-form"
+    type="form"
+    submit-label="Login"
+    :actions="false"
+    @submit="submitHandler"
+  >
+    <FormKit
+      type="text"
+      name="email"
+      label="Your email"
+      placeholder="jane@example.com"
+      help="What email do you use?"
+      validation="required|email"
+    />
+    <FormKit
+      type="password"
+      name="password"
+      label="Password"
+      validation="required|length:6|matches:/[^a-zA-Z]/"
+      :validation-messages="{
+        matches: 'Please include at least one symbol',
+      }"
+      placeholder="Your password"
+      help="Enter your password"
+    />
+    <FormKit
+      type="checkbox"
+      name="remember"
+      label="Remember me"
+    />
 
-        <FormKit
-          type="submit"
-          label="Login"
-        />
-      </FormKit>
-      <div class="flex justify-center">
-        <p>Do not have an account?</p>
-        <ULink
-          to="/register"
-          class="text-blue-400 hover:underline ml-1"
-        >
-          Register
-        </ULink>
-      </div>
-    </div>
+    <FormKit
+      type="submit"
+      label="Login"
+    />
+  </FormKit>
+  <div class="flex justify-center">
+    <p>Do not have an account?</p>
+    <ULink
+      to="/register"
+      class="text-blue-400 hover:underline ml-1"
+    >
+      Register
+    </ULink>
   </div>
 </template>
