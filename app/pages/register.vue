@@ -36,6 +36,9 @@ const submitHandler = async (data: RegisterData, node?: FormKitNode) => {
     if (error instanceof FetchError && error.response?.status === 422) {
       node?.setErrors([], error.data.errors)
     }
+    else {
+      node?.setErrors(['An error occurred. Please try again.'])
+    }
   }
 }
 </script>
