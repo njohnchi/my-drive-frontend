@@ -30,7 +30,7 @@ const submitHandler = async (data: LoginData, node?: FormKitNode) => {
 </script>
 
 <template>
-  <h1 class="text-3xl text-center mb-2 font-semibold">
+  <h1 class="text-2xl text-center mb-2 font-semibold">
     Login
   </h1>
   <FormKit
@@ -74,7 +74,7 @@ const submitHandler = async (data: LoginData, node?: FormKitNode) => {
     <p>Do not have an account?</p>
     <ULink
       to="/register"
-      class="text-blue-400 hover:underline ml-1"
+      class="text-primary hover:underline ml-1"
     >
       Register
     </ULink>
