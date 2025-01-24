@@ -1,8 +1,11 @@
 <script setup lang="ts">
-useRouter().replace('/my-files')
+
 </script>
 
 <template>
+  <div>
+    <h1>Trash</h1>
+  </div>
 </template>
 
 <style scoped>
