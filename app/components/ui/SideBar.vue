@@ -4,14 +4,8 @@
 
 <template>
   <nav class="flex-1 flex flex-col">
-    <UButton
-      color="primary"
-      label="Create New"
-      variant="solid"
-      size="xl"
-      block
-      :ui="{ font: 'font-bold' }"
-    />
+    <CreateNewDropdown />
+
     <div class="mt-4">
       <ULink
         to="/my-files"
