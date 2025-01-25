@@ -1,24 +1,21 @@
 <script setup lang="ts">
-const items = [
+import type { User } from '~~/models/user'
+import type { DropdownItem } from '#ui/types'
+
+const user = useSanctumUser<User>()
+const items: DropdownItem[][] = [
   [{
-    label: 'ben@example.com',
+    label: user.value?.email as string,
     slot: 'account',
     disabled: true,
   }], [{
-    label: 'Settings',
-    icon: 'i-heroicons-cog-8-tooth',
-  }], [{
-    label: 'Documentation',
-    icon: 'i-heroicons-book-open',
-  }, {
-    label: 'Changelog',
-    icon: 'i-heroicons-megaphone',
-  }, {
-    label: 'Status',
-    icon: 'i-heroicons-signal',
+    label: 'Profile',
+    icon: 'i-heroicons-user',
+    click: () => { navigateTo('/') },
   }], [{
     label: 'Sign out',
     icon: 'i-heroicons-arrow-left-on-rectangle',
+    click: () => { navigateTo('/logout') },
   }],
 ]
 </script>
@@ -32,7 +29,7 @@ const items = [
     <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" />
 
     <template #account="{ item }">
-      <div class="text-left">
+      <div class="w-full flex flex-col items-center justify-center">
         <p>
           Signed in as
         </p>
